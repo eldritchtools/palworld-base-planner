@@ -18,7 +18,7 @@ function App() {
             <div style={{ height: "100vh" }} >
                 <Header title={"Palworld Base Planner"} lastUpdated={process.env.REACT_APP_LAST_UPDATED} />
                 <div className="App-content">
-                    <Tabs className="tabs" selectedTabClassName="selected-tab" selectedTabPanelClassName="selected-tab-panel">
+                    <Tabs className="tabs" selectedTabClassName="selected-tab" selectedTabPanelClassName="selected-tab-panel" forceRenderTabPanel>
                         <TabList className="tab-list">
                             <Tab className="tab" data-tooltip-id={"tabTooltip"} data-tooltip-content={"Plan out your base pals"}>
                                 Base Planning
