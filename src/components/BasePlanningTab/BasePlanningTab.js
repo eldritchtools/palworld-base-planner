@@ -142,11 +142,22 @@ function SidePanel({ selectedPalId, setSelectedPalId }) {
 function BasesDisplay({ selectedPalId }) {
     const { profileData } = useProfiles();
 
-    return <div style={{ display: "flex", flexDirection: "column", height: "100%", width: "100%", padding: "1rem", boxSizing: "border-box" }}>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", overflowY: "scroll", width: "100%", gap: "0.2rem" }}>
-            {profileData.bases.map((base, index) => <Base base={base} baseIndex={index} sidePanelSelectedPalId={selectedPalId} />)}
-            {profileData.bases.length < profileData.maxBases ? <BaseEmpty /> : null}
-        </div>
+    const style = { height: "100%", width: "100%", gap: "0.2rem", padding: "1rem", boxSizing: "border-box" };
+    if (profileData.plannerLayout === "Horizontal") {
+        style.display = "flex";
+        style.flexDirection = "column";
+        style.overflowX = "hidden";
+        style.overflowY = "scroll";
+    } else {
+        style.display = "flex";
+        style.flexDirection = "row";
+        style.overflowX = "scroll";
+        style.overflowY = "hidden";
+    }
+
+    return <div style={style}>
+        {profileData.bases.map((base, index) => <Base base={base} baseIndex={index} sidePanelSelectedPalId={selectedPalId} />)}
+        {profileData.bases.length < profileData.maxBases ? <BaseEmpty /> : null}
     </div>
 }
 
@@ -154,10 +165,10 @@ function BasePlanningTab() {
     const [selectedPalId, setSelectedPalId] = useState(null);
 
     return <div style={{ height: "100%", width: "100%", display: "flex" }}>
-        <div style={{ height: "100%", width: "480px" }}>
+        <div style={{ height: "100%", minWidth: "480px", width: "480px" }}>
             <SidePanel selectedPalId={selectedPalId} setSelectedPalId={setSelectedPalId} />
         </div>
-        <div style={{ height: "100%", flex: 1 }}>
+        <div style={{ height: "100%", width: "calc(100% - 480px)" }}>
             <BasesDisplay selectedPalId={selectedPalId} />
         </div>
     </div>;

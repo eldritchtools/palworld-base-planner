@@ -36,7 +36,15 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         profileHandler.deleteBase(profileData, setProfileData, baseIndex);
     }
 
-    const palDisplayComponent = <div style={{ display: "flex", flexDirection: "column", width: "480px", height: segmentHeight, border: "1px #aaa solid", borderRadius: "10px" }}>
+
+    const palDisplayStyle = { display: "flex", flexDirection: "column", width: "100%", height: segmentHeight, border: "1px #aaa solid", borderRadius: "10px" };
+    if (profileData.plannerLayout === "Horizontal") {
+        palDisplayStyle.minWidth = "480px";
+        palDisplayStyle.maxWidth = "480px";
+    } else {
+        palDisplayStyle.height = "100%";
+    }
+    const palDisplayComponent = <div style={palDisplayStyle}>
         <div style={{ display: "flex", flexDirection: "row" }}>
             <button style={{ flex: 1 }} disabled={selectedIndex === null || selectedIndex === 0}
                 onClick={() => { profileHandler.swapPalOrder(profileData, setProfileData, baseIndex, selectedIndex, selectedIndex - 1); setSelectedIndex(selectedIndex - 1); }}>{"<"}</button>
@@ -51,23 +59,25 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                     profileHandler.deletePal(profileData, setProfileData, baseIndex, selectedIndex);
                 }}>Remove</button>
         </div>
-        <div style={{ flex: 1, width: "100%", display: "flex", flexDirection: "row", flexWrap: "wrap", overflowY: "scroll", padding: "0.5rem", boxSizing: "border-box", gap: "0.5rem" }}>
-            {base.pals.map((basePal, index) => {
-                return <div onClick={() => selectedIndex === index ? setSelectedIndex(null) : setSelectedIndex(index)} >
-                    <PalIcon id={basePal.id} circle={true} highlighted={index === selectedIndex} />
-                </div>
-            })}
-            {base.pals.length < profileData.maxPals ?
-                <div
-                    style={{ width: "80px", height: "80px", border: "1px rgba(255, 255, 255, 0.3) solid", borderRadius: "50%", cursor: "pointer" }}
-                    onClick={() => profileHandler.addPalToBaseById(profileData, setProfileData, baseIndex, sidePanelSelectedPalId)}
-                >
-                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#aaa" strokeWidth="5">
-                        <line x1="40" y1="20" x2="40" y2="60" />
-                        <line x1="20" y1="40" x2="60" y2="40" />
-                    </svg>
-                </div> :
-                null}
+        <div style={{ flex: 1, width: "100%", overflowY: "scroll", padding: "0.5rem", boxSizing: "border-box" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(80px, 1fr))", justifyItems: "center", gap: "0.5rem" }}>
+                {base.pals.map((basePal, index) => {
+                    return <div onClick={() => selectedIndex === index ? setSelectedIndex(null) : setSelectedIndex(index)} >
+                        <PalIcon id={basePal.id} circle={true} highlighted={index === selectedIndex} />
+                    </div>
+                })}
+                {base.pals.length < profileData.maxPals ?
+                    <div
+                        style={{ width: "80px", height: "80px", border: "1px rgba(255, 255, 255, 0.3) solid", borderRadius: "50%", cursor: "pointer" }}
+                        onClick={() => profileHandler.addPalToBaseById(profileData, setProfileData, baseIndex, sidePanelSelectedPalId)}
+                    >
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="#aaa" strokeWidth="5">
+                            <line x1="40" y1="20" x2="40" y2="60" />
+                            <line x1="20" y1="40" x2="60" y2="40" />
+                        </svg>
+                    </div> :
+                    null}
+            </div>
         </div>
     </div>;
 
@@ -82,7 +92,12 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         }
     };
 
-    const workSuitabilitiesComponent = <div style={{ height: segmentHeight, width: "550px" }}>
+    const workSuitabilitiesStyle = { height: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
+    if (profileData.plannerLayout === "Horizontal") {
+        workSuitabilitiesStyle.minWidth = "550px";
+        workSuitabilitiesStyle.maxWidth = "550px";
+    }
+    const workSuitabilitiesComponent = <div style={workSuitabilitiesStyle}>
         <div style={{ textAlign: "start" }}>Work Suitabilities:</div>
         {selectedIndex !== null ?
             <table style={{ borderCollapse: "collapse" }}>
@@ -99,9 +114,9 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                             {work.id in base.pals[selectedIndex].currentSuitabilities ?
                                 <div className="editable-text" style={{ cursor: "pointer" }}
                                     onClick={() => profileHandler.togglePalEnabledWork(profileData, setProfileData, baseIndex, selectedIndex, work.id)}>
-                                    {base.pals[selectedIndex].enabledWork[work.id] ? 
-                                        <span style={{color: "#00ff66"}}>&#10004;</span> : 
-                                        <span style={{color: "red"}}>&#10006;</span>}
+                                    {base.pals[selectedIndex].enabledWork[work.id] ?
+                                        <span style={{ color: "#00ff66" }}>&#10004;</span> :
+                                        <span style={{ color: "red" }}>&#10006;</span>}
                                 </div> :
                                 ""}
                         </td>)}
@@ -159,8 +174,12 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         }
     </div>;
 
-    const passivesComponent = <div style={{ height: segmentHeight, width: "290px" }}>
-        <div style={{ textAlign: "start" }}>Passives:</div>
+    const passivesStyle = { height: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
+    if (profileData.plannerLayout === "Horizontal") {
+        passivesStyle.minWidth = "290px";
+    }
+    const passivesComponent = <div style={passivesStyle}>
+        <div style={{ textAlign: "start", width: "100%" }}>Passives:</div>
         {selectedIndex !== null ?
             <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
                 {base.pals[selectedIndex].passives.map((passive, index) =>
@@ -171,7 +190,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                     null
                 }
                 <div style={{ display: "flex" }}>
-                    <FeedbackButton style={{ flex: 1 }} onClick={() => profileHandler.copyPalPassives(profileData, setProfileData, baseIndex, selectedIndex, "same")} 
+                    <FeedbackButton style={{ flex: 1 }} onClick={() => profileHandler.copyPalPassives(profileData, setProfileData, baseIndex, selectedIndex, "same")}
                         text={"Copy to Same Pals in Base"} feedbackText={"Copied!"} />
                     <FeedbackButton style={{ flex: 1 }} onClick={() => profileHandler.copyPalPassives(profileData, setProfileData, baseIndex, selectedIndex, "all")}
                         text={"Copy to All Pals in Base"} feedbackText={"Copied!"} />
@@ -201,7 +220,11 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         }
     };
 
-    const condensationComponent = <div style={{ height: segmentHeight, width: "220px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+    const condensationStyle = { height: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
+    if (profileData.plannerLayout === "Horizontal") {
+        condensationStyle.minWidth = "220px";
+    }
+    const condensationComponent = <div style={condensationStyle}>
         <div style={{ width: "100%", textAlign: "start" }}>Condense Level:</div>
         {selectedIndex !== null ?
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", width: "220px" }}>
@@ -262,7 +285,11 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         </div>
     </div>;
 
-    const enhancementComponent = <div style={{ height: segmentHeight, width: "200px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+    const enhancementStyle = { height: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
+    if (profileData.plannerLayout === "Horizontal") {
+        enhancementStyle.minWidth = "200px";
+    }
+    const enhancementComponent = <div style={enhancementStyle}>
         <div style={{ width: "100%", textAlign: "start" }}>Work Speed Enhancement:</div>
         {selectedIndex !== null ? [
             <div style={{ display: "grid", gridTemplateColumns: "fit-content(1px) 1fr fit-content(1px)", alignItems: "center" }} >
@@ -302,64 +329,116 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         ]}
     </div>;
 
-    const otherComponent = <div style={{ height: segmentHeight, width: "180px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+    const otherStyle = { height: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
+    if (profileData.plannerLayout === "Horizontal") {
+        otherStyle.minWidth = "180px";
+    }
+    const otherComponent = <div style={otherStyle}>
         <div style={{ width: "100%", textAlign: "start" }}>Other Effects:</div>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", width: "100%", overflowY: "auto" }} >
             {base.pals.filter(pal => pal.id in palNotes).map(pal => <div style={{ display: "flex", flexDirection: "row", gap: "0.2rem", alignItems: "center", textAlign: "start", border: "1px #aaa dotted" }}>
                 <PalIcon id={pal.id} size={32} circle={true} />
                 {"farming" in palNotes[pal.id] ? <span>Ranch: {palNotes[pal.id].farming}</span> : null}
-                {"shortNote" in palNotes[pal.id] ? <span>{palNotes[pal.id].values[pal.currentCondenseLevel]} to {palNotes[pal.id].values[pal.targetCondenseLevel]} {palNotes[pal.id].shortNote}</span> : null}
+                {"shortNote" in palNotes[pal.id] ?
+                    pal.currentCondenseLevel === pal.targetCondenseLevel ?
+                        <span>{palNotes[pal.id].values[pal.currentCondenseLevel]} {palNotes[pal.id].shortNote}</span> :
+                        <span>{palNotes[pal.id].values[pal.currentCondenseLevel]} to {palNotes[pal.id].values[pal.targetCondenseLevel]} {palNotes[pal.id].shortNote}</span> :
+                    null}
             </div>)}
         </div>
     </div>
 
-    const notesComponent = <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "0.5rem", height: "3rem", width: "100%", paddingTop: "0.5rem" }}>
+    const notesStyle = { display: "flex", flexDirection: "row", alignItems: "center", gap: "0.5rem", width: "100%", paddingTop: "0.5rem" };
+    if (profileData.plannerLayout === "Horizontal") {
+        notesStyle.height = "3rem";
+    } else {
+        notesStyle.minHeight = "3rem";
+        // notesStyle.height = "100%";
+    }
+    const notesComponent = <div style={notesStyle}>
         <span>Notes:</span>
         <textarea style={{ height: "95%", flex: 1 }} value={base.notes} onChange={(e) => profileHandler.setBaseNotes(profileData, setProfileData, baseIndex, e.target.value)} />
     </div>
 
-    const containerStyle = {border: "2px #777 solid", borderRadius: "1rem", display: "flex", alignItems: "center", justifyContent: "center", boxSizing: "border-box"};
+    const containerStyle = { border: "2px #777 solid", borderRadius: "1rem", display: "flex", alignItems: "center", justifyContent: "center", boxSizing: "border-box" };
     if (profileData.plannerLayout === "Horizontal") {
         containerStyle.height = "350px";
         containerStyle.width = "100%";
     } else {
-        containerStyle.height = "920px";
-        containerStyle.width = "100%";
+        containerStyle.height = "100%";
+        containerStyle.minWidth = "580px";
+        containerStyle.paddingBottom = "1rem";
     }
 
     return <>
-        <div style={containerStyle}>
-            <div style={{ height: "100%", width: "100%", padding: "0.5rem", display: "flex", flexDirection: "column", justifyContent: "start" }}>
-                <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                    <div style={{ width: "20rem", fontSize: "1.2rem", fontWeight: "bold", textAlign: "start" }}>
-                        {editingName ?
-                            <input value={name} onChange={(e) => setName(e.target.value)} onKeyDown={handleInputNameKeyDown} onBlur={updateBaseName} autoFocus /> :
-                            <span className="editable-text" onClick={() => setEditingName(true)}>{base.name}</span>
-                        }
+        {profileData.plannerLayout === "Horizontal" ?
+            <div style={containerStyle}>
+                <div style={{ height: "100%", width: "100%", padding: "0.5rem", display: "flex", flexDirection: "column", justifyContent: "start" }}>
+                    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                        <div style={{ width: "20rem", fontSize: "1.2rem", fontWeight: "bold", textAlign: "start" }}>
+                            {editingName ?
+                                <input value={name} onChange={(e) => setName(e.target.value)} onKeyDown={handleInputNameKeyDown} onBlur={updateBaseName} autoFocus /> :
+                                <span className="editable-text" onClick={() => setEditingName(true)}>{base.name}</span>
+                            }
+                        </div>
+                        <div
+                            style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#cc0000", fontSize: "1.25rem", cursor: "pointer" }}
+                            onClick={() => setDeleteBaseOpen(true)}
+                        >
+                            &#x2716;
+                        </div>
                     </div>
-                    <div
-                        style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#cc0000", fontSize: "1.25rem", cursor: "pointer" }}
-                        onClick={() => setDeleteBaseOpen(true)}
-                    >
-                        &#x2716;
+                    <div style={{ textAlign: "start" }}>
+                        Showing: {selectedIndex !== null ? pals[base.pals[selectedIndex].id].name : "Summary"}
                     </div>
-                </div>
-                <div style={{ textAlign: "start" }}>
-                    Showing: {selectedIndex !== null ? pals[base.pals[selectedIndex].id].name : "Summary"}
-                </div>
 
-                <div style={{ display: "flex", flexDirection: "row", gap: "0.5rem" }}>
-                    {palDisplayComponent}
-                    {workSuitabilitiesComponent}
-                    {passivesComponent}
-                    {condensationComponent}
-                    {enhancementComponent}
-                    {otherComponent}
-                </div>
+                    <div style={{ display: "flex", flexDirection: "row", gap: "0.5rem" }}>
+                        {palDisplayComponent}
+                        {workSuitabilitiesComponent}
+                        <div style={{ display: "flex", flexDirection: "row", gap: "0.5rem", overflowX: "auto" }} >
+                            {passivesComponent}
+                            {condensationComponent}
+                            {enhancementComponent}
+                            {otherComponent}
+                        </div>
+                    </div>
 
-                {notesComponent}
+                    {notesComponent}
+                </div>
+            </div> :
+            <div style={containerStyle}>
+                <div style={{ height: "100%", width: "100%", padding: "0.5rem", display: "flex", flexDirection: "column", justifyContent: "start", overflowY: "auto" }}>
+                    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                        <div style={{ width: "20rem", fontSize: "1.2rem", fontWeight: "bold", textAlign: "start" }}>
+                            {editingName ?
+                                <input value={name} onChange={(e) => setName(e.target.value)} onKeyDown={handleInputNameKeyDown} onBlur={updateBaseName} autoFocus /> :
+                                <span className="editable-text" onClick={() => setEditingName(true)}>{base.name}</span>
+                            }
+                        </div>
+                        <div
+                            style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#cc0000", fontSize: "1.25rem", cursor: "pointer" }}
+                            onClick={() => setDeleteBaseOpen(true)}
+                        >
+                            &#x2716;
+                        </div>
+                    </div>
+                    <div style={{ textAlign: "start" }}>
+                        Showing: {selectedIndex !== null ? pals[base.pals[selectedIndex].id].name : "Summary"}
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gridTemplateRows: "1fr auto auto", flex: 1, gap: "0.5rem", padding: "0.5rem" }}>
+                        <div style={{ gridColumn: "span 2" }}>{palDisplayComponent}</div>
+                        <div style={{ gridColumn: "span 2" }}>{workSuitabilitiesComponent}</div>
+                        {passivesComponent}
+                        {condensationComponent}
+                        {enhancementComponent}
+                        {otherComponent}
+                    </div>
+
+                    {notesComponent}
+                </div>
             </div>
-        </div>
+        }
         <Modal isOpen={deleteBaseOpen} onClose={() => setDeleteBaseOpen(false)}>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.2rem" }} >
                 <span style={{ fontSize: "1.2rem", fontWeight: "bold" }}>Are you sure you want to delete {base.name}?</span>
