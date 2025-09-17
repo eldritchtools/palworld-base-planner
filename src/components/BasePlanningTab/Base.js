@@ -469,10 +469,18 @@ function BaseEmpty() {
         }
     }
 
+    const containerStyle = { border: "2px #777 solid", borderRadius: "1rem", display: "flex", alignItems: "center", justifyContent: "center", boxSizing: "border-box" };
+    if (profileData.plannerLayout === "Horizontal") {
+        containerStyle.height = "350px";
+        containerStyle.width = "100%";
+    } else {
+        containerStyle.height = "100%";
+        containerStyle.minWidth = "580px";
+        containerStyle.paddingBottom = "1rem";
+    }
+
     return <>
-        <div className="selection-button" onClick={() => setAddBaseOpen(true)}
-            style={{ height: "300px", width: "100%", border: "2px #777 solid", borderRadius: "1rem", display: "flex", alignItems: "center", justifyContent: "center", boxSizing: "border-box" }}
-        >
+        <div className="selection-button" onClick={() => setAddBaseOpen(true)} style={containerStyle}>
             <div style={{ fontSize: "3rem", fontWeight: "bold" }} >+ Add Base</div>
         </div>
         <Modal isOpen={addBaseOpen} onClose={closeAddBase}>
