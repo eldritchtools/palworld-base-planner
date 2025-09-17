@@ -27,7 +27,7 @@ function NumberOption({ value, setValue, min = null, max = null, step = 1 }) {
     }
 
     return <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-        <button onClick={() => setOption((value ?? min) - step)} disabled={value === min}>{"<"}</button>
+        <button onClick={() => setOption((value ?? min) - step)} disabled={value === undefined || value === min}>{"<"}</button>
         <input type="number" value={value ?? min} min={min} step={3} onChange={(e) => setOption(e.target.value === "" ? 0 : parseInt(e.target.value))} />
         <button onClick={() => setOption((value ?? min) + step)} disabled={value === max}>{">"}</button>
     </div>

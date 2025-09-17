@@ -71,6 +71,17 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         </div>
     </div>;
 
+    const workSuitabilitiesRemoveZero = (level, work) => {
+        if (profileData.shownValues === "Current Only") {
+            const result = base.pals.filter(pal => work.id in pal.currentSuitabilities && pal.enabledWork[work.id] && pal.currentSuitabilities[work.id] === level).length;
+            return result === 0 ? null : result;
+        } else {
+            const result1 = base.pals.filter(pal => work.id in pal.currentSuitabilities && pal.enabledWork[work.id] && pal.currentSuitabilities[work.id] === level).length;
+            const result2 = base.pals.filter(pal => work.id in pal.targetSuitabilities && pal.enabledWork[work.id] && pal.targetSuitabilities[work.id] === level).length;
+            return result1 === 0 && result2 === 0 ? null : `${result1}/${result2}`;
+        }
+    };
+
     const workSuitabilitiesComponent = <div style={{ height: segmentHeight, width: "550px" }}>
         <div style={{ textAlign: "start" }}>Work Suitabilities:</div>
         {selectedIndex !== null ?
@@ -128,11 +139,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                     {[1, 2, 3, 4, 5].map(level => <tr>
                         <td style={tableCellStyle}>{level}</td>
                         {workSuitabilities.map(work => <td style={tableCellStyle}>
-                            {
-                                profileData.shownValues === "Current Only" ?
-                                    base.pals.filter(pal => work.id in pal.currentSuitabilities && pal.enabledWork[work.id] && pal.currentSuitabilities[work.id] === level).length :
-                                    `${base.pals.filter(pal => work.id in pal.currentSuitabilities && pal.enabledWork[work.id] && pal.currentSuitabilities[work.id] === level).length}/${base.pals.filter(pal => work.id in pal.targetSuitabilities && pal.enabledWork[work.id] && pal.targetSuitabilities[work.id] === level).length}`
-                            }
+                            {workSuitabilitiesRemoveZero(level, work)}
                         </td>)}
                     </tr>)}
                     <tr>
@@ -183,6 +190,17 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         }
     </div>;
 
+    const condensationRemoveZero = (level) => {
+        if (profileData.shownValues === "Current Only") {
+            const result = base.pals.filter(pal => pal.currentCondenseLevel === level).length;
+            return result === 0 ? null : result;
+        } else {
+            const result1 = base.pals.filter(pal => pal.currentCondenseLevel === level).length;
+            const result2 = base.pals.filter(pal => pal.targetCondenseLevel === level).length;
+            return result1 === 0 && result2 === 0 ? null : `${result1}/${result2}`;
+        }
+    };
+
     const condensationComponent = <div style={{ height: segmentHeight, width: "220px", display: "flex", flexDirection: "column", alignItems: "center" }}>
         <div style={{ width: "100%", textAlign: "start" }}>Condense Level:</div>
         {selectedIndex !== null ?
@@ -204,11 +222,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                     <tbody>
                         <tr>{[0, 1, 2, 3, 4].map(level => <td style={tableCellStyle}>{level}</td>)}</tr>
                         <tr>{[0, 1, 2, 3, 4].map(level => <td style={tableCellStyle}>
-                            {
-                                profileData.shownValues === "Current Only" ?
-                                    base.pals.filter(pal => pal.currentCondenseLevel === level).length :
-                                    `${base.pals.filter(pal => pal.currentCondenseLevel === level).length}/${base.pals.filter(pal => pal.targetCondenseLevel === level).length}`
-                            }
+                            {condensationRemoveZero(level)}
                         </td>)}</tr>
                     </tbody>
                 </table>
