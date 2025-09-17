@@ -125,7 +125,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                         <td style={tableCellStyle}>Current</td>
                         {workSuitabilities.map(work => work.id in base.pals[selectedIndex].currentSuitabilities ?
                             <td style={tableCellStyle}>
-                                <NumberSelector value={base.pals[selectedIndex].currentSuitabilities[work.id]} min={pals[base.pals[selectedIndex].id].workSuitability[work.id]} max={5}
+                                <NumberSelector value={base.pals[selectedIndex].currentSuitabilities[work.id]} min={pals[base.pals[selectedIndex].id].workSuitability[work.id]} max={work.id === "farming" ? 2 : 5}
                                     setValue={e => profileHandler.updatePalCurrentSuitability(profileData, setProfileData, baseIndex, selectedIndex, work.id, e)} />
                             </td> :
                             <td style={tableCellStyle}></td>
@@ -135,7 +135,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                         <td style={tableCellStyle}>Target</td>
                         {workSuitabilities.map(work => work.id in base.pals[selectedIndex].targetSuitabilities ?
                             <td style={tableCellStyle}>
-                                <NumberSelector value={base.pals[selectedIndex].targetSuitabilities[work.id]} min={base.pals[selectedIndex].currentSuitabilities[work.id]} max={5}
+                                <NumberSelector value={base.pals[selectedIndex].targetSuitabilities[work.id]} min={base.pals[selectedIndex].currentSuitabilities[work.id]} max={work.id === "farming" ? 2 : 5}
                                     setValue={e => profileHandler.updatePalTargetSuitability(profileData, setProfileData, baseIndex, selectedIndex, work.id, e)} />
                             </td> :
                             <td style={tableCellStyle}></td>
@@ -163,7 +163,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                         </td>
 
                         {workSuitabilities.map(work => <td style={tableCellStyle}>
-                            {base.pals.reduce((acc, pal) =>
+                            {work.id === "farming" ? null : base.pals.reduce((acc, pal) =>
                                 work.id in pal.currentSuitabilities && pal.enabledWork[work.id] ?
                                     acc + Math.max(0, pal.targetSuitabilities[work.id] - pal.currentSuitabilities[work.id] - (pal.targetCondenseLevel === 4 && pal.currentCondenseLevel < 4 ? 1 : 0)) :
                                     acc, 0)}
