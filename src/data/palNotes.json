@@ -1,0 +1,104 @@
+{
+    "BlueberryFairy": {
+        "notes": "While at a base, Prunelia’s prayers bless the crops, increasing their harvest.",
+        "shortNote": "Increased crop harvest",
+        "values": ["+18%", "+22%", "+26%", "+30%", "+35%"]
+    },
+    "Bastet": {
+        "farming": "Gold Coin"
+    },
+    "Bastet_Ice": {
+        "farming": "Gold Coin"
+    },
+    "SheepBall": {
+        "farming": "Wool"
+    },
+    "SweetsSheep": {
+        "farming": "Cotton Candy"
+    },
+    "Alpaca": {
+        "farming": "Wool"
+    },
+    "ChickenPal": {
+        "farming": "Egg"
+    },
+    "BerryGoat": {
+        "farming": "Red Berries"
+    },
+    "WhiteMoth": {
+        "farming": "High Quality Cloth"
+    },
+    "CuteFox": {
+        "farming": "Miscellaneous Items"
+    },
+    "Kelpie": {
+        "farming": "Pal Fluid"
+    },
+    "Kelpie_Fire": {
+        "farming": "Flame Organ"
+    },
+    "CowPal": {
+        "farming": "Milk"
+    },
+    "SoldierBee": {
+        "farming": "Honey"
+    },
+    "PinkRabbit": {
+        "notes": "While at a base, increases work efficiency when working at Weapon Workbench, Weapon Assembly Line, and other related facilities.",
+        "shortNote": "Increased crafting speed at weapons crafting stations",
+        "values": ["+200%", "+220%", "+260%", "+320%", "+400%"]
+    },
+    "WoolFox": {
+        "farming": "Wool"
+    },
+    "LazyCatfish": {
+        "farming": "High Quality Pal Oil"
+    },
+    "LazyCatfish_Gold": {
+        "farming": "High Quality Pal Oil, Gold Coin"
+    },
+    "LavaGirl": {
+        "farming": "Flame Organ"
+    },
+    "LeafPrincess": {
+        "notes": "While at a base, Lullu fills the farm with good spirits, increasing the growth rate of the crops.",
+        "shortNote": "Increased crop growth rate",
+        "values": ["+25%", "+30%", "+35%", "+40%", "+50%"]
+    },
+    "MushroomDragon": {
+        "notes": "While at a base, its mysterious spores slow the rate at which the SAN value of allies at the base decreases.",
+        "shortNote": "Reduced SAN drain of base pals",
+        "values": ["-10%", "-11%", "-13%", "-14%", "-15%"]
+    },
+    "MushroomDragon_Dark": {
+        "notes": "While at a base, its mysterious spores slow the rate at which the SAN value of allies at the base decreases.",
+        "shortNote": "Reduced SAN drain of base pals",
+        "values": ["-10%", "-11%", "-13%", "-14%", "-15%"]
+    },
+    "CandleGhost": {
+        "farming": "Bone"
+    },
+    "JellyfishFairy": {
+        "notes": "While Jelliette and Jellroy are in your base, Jelliette’s watering speed is increased.",
+        "shortNote": "Increased watering speed if with Jellroy",
+        "values": ["+50%", "+60%", "+70%", "+90%", "+120%"]
+    },
+    "BerryGoat_Dark": {
+        "farming": "Venom Gland"
+    },
+    "PinkRabbit_Grass": {
+        "notes": "While at a base, increases work efficiency when working at Weapon Workbench, Weapon Assembly Line, and other related facilities.",
+        "shortNote": "Increased crafting speed at weapons crafting stations",
+        "values": ["+200%", "+220%", "+260%", "+320%", "+400%"]
+    },
+    "Plesiosaur": {
+        "notes": "While at a base, shortens the time it takes Pals assigned to Breeding Farm to produce eggs. (Effect does not stack.)",
+        "shortNote": "Faster breeding time for pals in breeding farm",
+        "values": ["+20%", "+26%", "+32%", "+38%", "+50%"]
+    },
+    "JellyfishGhost": {
+        "notes": "While Jelliette and Jellroy are in your base, Jellroy’s watering speed is increased.",
+        "shortNote": "Increased watering speed if with Jelliette",
+        "values": ["+50%", "+60%", "+70%", "+90%", "+120%"]
+    }
+}

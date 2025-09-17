@@ -1,0 +1,85 @@
+.selection-button {
+    background-color: #1f1f1f;
+    color: #ddd;
+    border: 1px solid #aaa;
+    padding: 4px 4px;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.selection-button:hover {
+    cursor: pointer;
+}
+
+.selection-button-selected {
+    background-color: #3f3f3f;
+    color: #ddd;
+    border: 1px solid #aaa;
+    padding: 4px 4px;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.selection-button-selected:hover {
+    cursor: pointer;
+}
+
+.editable-text:hover {
+    background-color: #555;
+    border-radius: 4px;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.number-select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 1.5rem;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.number-select-trigger:hover {
+    background-color: #555;
+    border-radius: 4px;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.number-select-value {
+    display: flex;
+    align-items: center;
+}
+
+.number-select-content {
+    background: #1f1f1f;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 150px;
+    z-index: 100;
+}
+
+.number-select-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.number-select-item {
+    position: relative;
+    padding: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.number-select-item:focus,
+.number-select-item:hover {
+    background: #555;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.number-item-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
