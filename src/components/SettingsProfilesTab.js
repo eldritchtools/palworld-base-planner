@@ -50,10 +50,14 @@ function SettingsComponent() {
     const { profileData, setProfileData } = useProfiles();
 
     const getCurrentDefaultPassives = () => {
-        const newArr = [...profileData.defaultPassives];
-        newArr.length = 4;
-        newArr.fill(null, profileData.defaultPassives.length);
-        return newArr
+        if ("defaultPassives" in profileData) {
+            const newArr = [...profileData.defaultPassives];
+            newArr.length = 4;
+            newArr.fill(null, profileData.defaultPassives.length);
+            return newArr;
+        } else {
+            return [null, null, null, null];
+        }
     }
     const [passivesOpen, setPassivesOpen] = useState(false);
     const [selectedPassives, setSelectedPassives] = useState([]);
