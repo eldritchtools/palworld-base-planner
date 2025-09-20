@@ -62,7 +62,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         <div style={{ flex: 1, width: "100%", overflowY: "scroll", padding: "0.5rem", boxSizing: "border-box" }}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(80px, 1fr))", justifyItems: "center", gap: "0.5rem" }}>
                 {base.pals.map((basePal, index) => {
-                    return <div onClick={() => selectedIndex === index ? setSelectedIndex(null) : setSelectedIndex(index)} >
+                    return <div style={{ cursor: "pointer" }} onClick={() => selectedIndex === index ? setSelectedIndex(null) : setSelectedIndex(index)} >
                         <PalIcon id={basePal.id} circle={true} highlighted={index === selectedIndex} />
                     </div>
                 })}
@@ -389,7 +389,9 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                         </div>
                     </div>
                     <div style={{ textAlign: "start" }}>
-                        Showing: {selectedIndex !== null ? pals[base.pals[selectedIndex].id].name : "Summary"}
+                        <span data-tooltip-id="showingPal" style={{ borderBottom: "1px #aaa dotted" }}>
+                            Showing: {selectedIndex !== null ? pals[base.pals[selectedIndex].id].name : "Summary"}
+                        </span>
                     </div>
 
                     <div style={{ display: "flex", flexDirection: "row", gap: "0.5rem" }}>
@@ -423,7 +425,9 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                         </div>
                     </div>
                     <div style={{ textAlign: "start" }}>
-                        Showing: {selectedIndex !== null ? pals[base.pals[selectedIndex].id].name : "Summary"}
+                        <span data-tooltip-id="showingPal" style={{ borderBottom: "1px #aaa dotted" }}>
+                            Showing: {selectedIndex !== null ? pals[base.pals[selectedIndex].id].name : "Summary"}
+                        </span>
                     </div>
 
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gridTemplateRows: "1fr auto auto", flex: 1, gap: "0.5rem", padding: "0.5rem" }}>

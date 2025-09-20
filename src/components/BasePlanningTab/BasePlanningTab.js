@@ -6,6 +6,8 @@ import { pals, PalIcon, palIdSortFunc, checkPalSearchMatch } from "@eldritchtool
 import { WorkIcon, workSuitabilities } from "../workSuitabilities";
 import palNotes from '../../data/palNotes.json';
 import { Base, BaseEmpty } from "./Base";
+import { tooltipStyle } from "../../styles";
+import { Tooltip } from "react-tooltip";
 
 function comparePalNames(a, b) {
     return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
@@ -111,7 +113,7 @@ function SidePanel({ selectedPalId, setSelectedPalId }) {
     const palsDisplayComponent = <div style={{ display: "flex", width: "100%", flex: 1, overflowY: "scroll", padding: "2px", borderRadius: "5px", border: "1px #aaa solid", boxSizing: "border-box" }}>
         <div style={{ display: "flex", alignItems: "start", justifyContent: "center", flexWrap: "wrap", gap: "0.5rem", margin: "0.2rem", height: "fit-content", width: "100%" }}>
             {filteredPals.map(pal => <>
-                <div data-tooltip-id={"palInfocardTooltip"} data-tooltip-content={pal.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }} onClick={() => handlePalClick(pal.id)}>
+                <div data-tooltip-id={"palInfocardTooltip"} data-tooltip-content={pal.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", cursor: "pointer" }} onClick={() => handlePalClick(pal.id)}>
                     <PalIcon pal={pal} circle={true} showName={true} highlighted={pal.id === selectedPalId} wrapName={true} />
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "center", maxWidth: "80px" }}>
                         {
@@ -130,11 +132,16 @@ function SidePanel({ selectedPalId, setSelectedPalId }) {
     </div>
 
     return <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%", borderRight: "1px #aaa solid" }}>
-        <div style={{ fontWeight: "bold" }}>Select Pal to Add</div>
+        <div>
+            <span data-tooltip-id="selectPalToAdd" style={{ fontWeight: "bold", borderBottom: "1px #aaa dotted" }}>
+                Select Pal to Add
+            </span>
+        </div>
         {searchComponent}
         {filterComponents}
         {sortComponents}
         {palsDisplayComponent}
+        <Tooltip id="selectPalToAdd" style={tooltipStyle}>Select a pal to add to bases. Click the + icon in a base to add the chosen pal to that base.</Tooltip>
     </div>
 }
 
@@ -158,6 +165,8 @@ function BasesDisplay({ selectedPalId }) {
     return <div style={style}>
         {profileData.bases.map((base, index) => <Base base={base} baseIndex={index} sidePanelSelectedPalId={selectedPalId} />)}
         {profileData.bases.length < profileData.maxBases ? <BaseEmpty /> : null}
+
+        <Tooltip id={"showingPal"} style={tooltipStyle} >Click a pal to edit its info. Click on the currently selected pal to go back to the summary.</Tooltip>
     </div>
 }
 
