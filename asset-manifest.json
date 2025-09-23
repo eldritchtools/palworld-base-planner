@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/palworld-base-planner/static/css/main.b6ecf08a.css",
-    "main.js": "/palworld-base-planner/static/js/main.fec0e1aa.js",
+    "main.js": "/palworld-base-planner/static/js/main.4dadc326.js",
     "static/js/453.23f80942.chunk.js": "/palworld-base-planner/static/js/453.23f80942.chunk.js",
     "index.html": "/palworld-base-planner/index.html",
     "main.b6ecf08a.css.map": "/palworld-base-planner/static/css/main.b6ecf08a.css.map",
-    "main.fec0e1aa.js.map": "/palworld-base-planner/static/js/main.fec0e1aa.js.map",
+    "main.4dadc326.js.map": "/palworld-base-planner/static/js/main.4dadc326.js.map",
     "453.23f80942.chunk.js.map": "/palworld-base-planner/static/js/453.23f80942.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b6ecf08a.css",
-    "static/js/main.fec0e1aa.js"
+    "static/js/main.4dadc326.js"
   ]
 }
