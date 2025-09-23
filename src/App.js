@@ -12,6 +12,12 @@ import { pals } from '@eldritchtools/palworld-shared-library';
 
 const tooltipNormalStyle = { ...tooltipStyle, fontWeight: "normal" };
 
+const description = <span>Palworld Base Planner is a free fan-made online tool that helps you decide which Pals to place in your bases. Instead of guesswork, the planner makes it easy to balance work suitability and track the required resources to upgrade your Pals.
+<br/><br/>
+Organize your Pals, spot missing work types, get recommendations for base Pals, and discover options you may have overlooked.
+<br/><br/>
+The Palworld Base Planner saves time and reduces trial and error. Build well-balanced bases and share your plans with friends or other players with the profiles feature.</span>
+
 function App() {
     return <ProfileProvider dbName={"palworld-base-planner"} migrateProfile={migrateProfile}>
         <div className="App">
@@ -40,7 +46,7 @@ function App() {
                 <Tooltip id={"palInfocardTooltip"} style={tooltipStyle} getTooltipContainer={() => document.body} render={({ content }) => <PalInfoCard pal={pals[content]} />} />
             </div>
             <Footer
-                description={"This site is a fan-made web tool built to help with base planning for Palworld players."}
+                description={description}
                 gameName={"Palworld"}
                 developerName={"Pocketpair"}
                 githubLink={"https://github.com/eldritchtools/palworld-base-planner"}
