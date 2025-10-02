@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import * as profileHandler from "./profileHandler";
 import { PassiveSelect } from "@eldritchtools/palworld-shared-library";
 
-const componentStyle = { height: "100%", flex: 1, border: "1px #aaa solid", borderRadius: "5px", display: "flex", flexDirection: "column", gap: "1rem", boxSizing: "border-box", alignItems: "center" };
+const componentStyle = { height: "100%", flex: 1, border: "1px #aaa solid", borderRadius: "5px", display: "flex", flexDirection: "column", gap: "1rem", boxSizing: "border-box", alignItems: "center", padding: "1rem" };
 
 function Setting({ name, tooltip, valueComponent }) {
     return <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)" }}>
@@ -294,7 +294,7 @@ function ProfilesComponent() {
 
 function SettingsProfilesTab() {
 
-    return <div style={{ height: "95%", width: "80%", display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(800px, 1fr))", gap: "1rem", overflowY: "auto" }}>
+    return <div style={{ height: "auto", width: "80%", display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(800px, 1fr))", gap: "1rem" }}>
         <SettingsComponent />
         <ProfilesComponent />
     </div>;

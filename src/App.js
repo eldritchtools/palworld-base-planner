@@ -22,7 +22,7 @@ The Palworld Base Planner saves time and reduces trial and error. Build well-bal
 function App() {
     return <ProfileProvider dbName={"palworld-base-planner"} migrateProfile={migrateProfile}>
         <div className="App">
-            <div style={{ height: "100vh" }} >
+            <div style={{ minHeight: "100vh", height: "auto" }} >
                 <Header title={"Palworld Base Planner"} lastUpdated={process.env.REACT_APP_LAST_UPDATED} />
                 <div className="App-content">
                     <Tabs className="tabs" selectedTabClassName="selected-tab" selectedTabPanelClassName="selected-tab-panel" forceRenderTabPanel>

@@ -5,7 +5,7 @@ import WorkPriorities from "./WorkPriorities";
 import WorkType from "./WorkType";
 
 function WorkSuitabilitiesTab() {
-    return <div style={{ height: "95%", width: "90%", overflowY: "auto" }}>
+    return <div style={{ height: "auto", width: "90%" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(1000px, 1fr)", gap: "0.5rem" }}>
             
             <div><WorkBonuses /></div>

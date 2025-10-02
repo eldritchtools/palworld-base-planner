@@ -173,7 +173,7 @@ function BasesDisplay({ selectedPalId }) {
 function BasePlanningTab() {
     const [selectedPalId, setSelectedPalId] = useState(null);
 
-    return <div style={{ height: "100%", width: "100%", display: "flex" }}>
+    return <div style={{ height: "90vh", width: "100%", display: "flex" }}>
         <div style={{ height: "100%", minWidth: "480px", width: "480px" }}>
             <SidePanel selectedPalId={selectedPalId} setSelectedPalId={setSelectedPalId} />
         </div>
