@@ -275,7 +275,7 @@ function ProfilesComponent() {
             <textarea style={{height: "5rem", width: "90%"}} ref={textAreaRef} readOnly={true} value={dataString} onClick={handleCopy}/>
             <div>{copySuccess ?? null}</div>
             <div style={{ display: "flex", justifyContent: "end", gap: "2" }}>
-                <button onClick={closeExportProfile}>close</button>
+                <button onClick={closeExportProfile}>Close</button>
             </div>
         </Modal>
 

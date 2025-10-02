@@ -9,6 +9,7 @@ import { Header, Footer, ProfileProvider } from '@eldritchtools/shared-component
 import migrateProfile from './migrateProfile';
 import PalInfoCard from './components/PalInfoCard';
 import { pals } from '@eldritchtools/palworld-shared-library';
+import MigrationTab from './components/MigrationTab';
 
 const tooltipNormalStyle = { ...tooltipStyle, fontWeight: "normal" };
 
@@ -35,11 +36,15 @@ function App() {
                             <Tab className="tab" data-tooltip-id={"tabTooltip"} data-tooltip-content={"Change settings or switch profiles to better manage your bases"}>
                                 Settings and Profiles
                             </Tab>
+                            <Tab className="tab" data-tooltip-id={"tabTooltip"} data-tooltip-content={"Details on migration"}>
+                                Click here if your data's missing
+                            </Tab>
                         </TabList>
 
                         <TabPanel className="tab-panel"><BasePlanningTab /></TabPanel>
                         <TabPanel className="tab-panel"><WorkSuitabilitiesTab /></TabPanel>
                         <TabPanel className="tab-panel"><SettingsProfilesTab /></TabPanel>
+                        <TabPanel className="tab-panel"><MigrationTab /></TabPanel>
                     </Tabs>
                 </div>
                 <Tooltip id={"tabTooltip"} style={tooltipNormalStyle} />
