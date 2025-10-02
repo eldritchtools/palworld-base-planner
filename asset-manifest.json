@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.b6ecf08a.css",
-    "main.js": "/static/js/main.bb5c262a.js",
-    "static/js/453.23f80942.chunk.js": "/static/js/453.23f80942.chunk.js",
-    "index.html": "/index.html",
-    "main.b6ecf08a.css.map": "/static/css/main.b6ecf08a.css.map",
-    "main.bb5c262a.js.map": "/static/js/main.bb5c262a.js.map",
-    "453.23f80942.chunk.js.map": "/static/js/453.23f80942.chunk.js.map"
+    "main.css": "/palworld-base-planner/static/css/main.b6ecf08a.css",
+    "main.js": "/palworld-base-planner/static/js/main.8b0de7ec.js",
+    "static/js/453.23f80942.chunk.js": "/palworld-base-planner/static/js/453.23f80942.chunk.js",
+    "index.html": "/palworld-base-planner/index.html",
+    "main.b6ecf08a.css.map": "/palworld-base-planner/static/css/main.b6ecf08a.css.map",
+    "main.8b0de7ec.js.map": "/palworld-base-planner/static/js/main.8b0de7ec.js.map",
+    "453.23f80942.chunk.js.map": "/palworld-base-planner/static/js/453.23f80942.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b6ecf08a.css",
-    "static/js/main.bb5c262a.js"
+    "static/js/main.8b0de7ec.js"
   ]
 }
