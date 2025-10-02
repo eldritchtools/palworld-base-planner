@@ -1,7 +1,7 @@
 {
   "name": "palworld-base-planner",
   "version": "0.1.0",
-  "homepage": "https://palworld-base.eldritchtools.com/",
+  "homepage": "https://eldritchtools.github.io/palworld-base-planner/",
   "private": true,
   "dependencies": {
     "@eldritchtools/palworld-shared-library": "github:eldritchtools/palworld-shared-library#v1.0.5",
