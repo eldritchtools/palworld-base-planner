@@ -83,7 +83,7 @@ function setBaseNotes(profileData, setProfileData, baseIndex, notes) {
 
 const getNewCurrentSuitability = (profileData, palId) => {
     if (profileData.defaultWork && profileData.defaultWork === "Set Current and Target to Max") {
-        return Object.keys(pals[palId].workSuitability).reduce((acc, work) => {acc[work] = work === "farming" ? 2 : 5; return acc}, {});
+        return Object.keys(pals[palId].workSuitability).reduce((acc, work) => {acc[work] = 10; return acc}, {});
     } else {
         return {...pals[palId].workSuitability};
     }
@@ -91,7 +91,7 @@ const getNewCurrentSuitability = (profileData, palId) => {
 
 const getNewTargetSuitability = (profileData, palId) => {
     if (profileData.defaultWork && profileData.defaultWork !== "Use Starting Levels") {
-        return Object.keys(pals[palId].workSuitability).reduce((acc, work) => {acc[work] = work === "farming" ? 2 : 5; return acc}, {});
+        return Object.keys(pals[palId].workSuitability).reduce((acc, work) => {acc[work] = 10; return acc}, {});
     } else {
         return {...pals[palId].workSuitability};
     }
