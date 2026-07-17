@@ -1,6 +1,6 @@
 {
     "BlueberryFairy": {
-        "notes": "While at a base, Prunelia’s prayers bless the crops, increasing their harvest.",
+        "notes": "While at a base, Prunelia's prayers bless the crops, increasing their harvest by (18~35)%.",
         "shortNote": "Increased crop harvest",
         "values": ["+18%", "+22%", "+26%", "+30%", "+35%"]
     },
@@ -8,12 +8,15 @@
         "farming": "Gold Coin"
     },
     "Bastet_Ice": {
-        "farming": "Gold Coin"
+        "farming": "Ice Organ"
     },
     "SheepBall": {
         "farming": "Wool"
     },
     "SweetsSheep": {
+        "notes": "While at a base, reduces Hunger depletion rate of Base Pals by (-10~-20)%. (Does not stack)",
+        "shortNote": "Reduce hunger of base pals",
+        "values": ["-10%", "-12%", "-14%", "-16%", "-20%"],
         "farming": "Cotton Candy"
     },
     "Alpaca": {
@@ -29,10 +32,10 @@
         "farming": "High Quality Cloth"
     },
     "CuteFox": {
-        "farming": "Miscellaneous Items"
+        "farming": "Spheres, Arrow, Gold Coin, Bone"
     },
     "Kelpie": {
-        "farming": "Pal Fluid"
+        "farming": "Acquatic Pal Fluids"
     },
     "Kelpie_Fire": {
         "farming": "Flame Organ"
@@ -44,9 +47,9 @@
         "farming": "Honey"
     },
     "PinkRabbit": {
-        "notes": "While at a base, increases work efficiency when working at Weapon Workbench, Weapon Assembly Line, and other related facilities.",
-        "shortNote": "Increased crafting speed at weapons crafting stations",
-        "values": ["+200%", "+220%", "+260%", "+320%", "+400%"]
+        "notes": "While at a base, increases the Handiwork Work Suitability Level for all other Base Pals by +1.",
+        "shortNote": "Boost Handiwork of base pals",
+        "values": ["1", "1", "1", "1", "1"]
     },
     "WoolFox": {
         "farming": "Wool"
@@ -61,19 +64,17 @@
         "farming": "Flame Organ"
     },
     "LeafPrincess": {
-        "notes": "While at a base, Lullu fills the farm with good spirits, increasing the growth rate of the crops.",
+        "notes": "While at a base, Lullu fills farms with good spirits, increasing the growth rate of the crops by (50~70)%.",
         "shortNote": "Increased crop growth rate",
-        "values": ["+25%", "+30%", "+35%", "+40%", "+50%"]
+        "values": ["+50%", "+55%", "+60%", "+65%", "+75%"]
     },
     "MushroomDragon": {
-        "notes": "While at a base, its mysterious spores slow the rate at which the SAN value of allies at the base decreases.",
-        "shortNote": "Reduced SAN drain of base pals",
-        "values": ["-10%", "-11%", "-13%", "-14%", "-15%"]
+        "farming": "Mushroom, Cavern Mushroom"
     },
     "MushroomDragon_Dark": {
-        "notes": "While at a base, its mysterious spores slow the rate at which the SAN value of allies at the base decreases.",
+        "notes": "While at a base, its mysterious spores slow the rate at which the SAN value of allies at the base decreases by (10~15)%.",
         "shortNote": "Reduced SAN drain of base pals",
-        "values": ["-10%", "-11%", "-13%", "-14%", "-15%"]
+        "values": ["-10%", "-11.5%", "-13%", "-14%", "-15%"]
     },
     "CandleGhost": {
         "farming": "Bone"
@@ -87,12 +88,12 @@
         "farming": "Venom Gland"
     },
     "PinkRabbit_Grass": {
-        "notes": "While at a base, increases work efficiency when working at Weapon Workbench, Weapon Assembly Line, and other related facilities.",
+        "notes": "Increases efficiency by (200~400)% when working at a Weapon Workbench, Weapon Assembly Line, or other related facilities.",
         "shortNote": "Increased crafting speed at weapons crafting stations",
         "values": ["+200%", "+220%", "+260%", "+320%", "+400%"]
     },
     "Plesiosaur": {
-        "notes": "While at a base, shortens the time it takes Pals assigned to Breeding Farm to produce eggs. (Effect does not stack.)",
+        "notes": "While in your base, increases the egg production speed of Pals assigned to Breeding Farm by (20~50)%. (Does not stack)",
         "shortNote": "Faster breeding time for pals in breeding farm",
         "values": ["+20%", "+26%", "+32%", "+38%", "+50%"]
     },
@@ -100,5 +101,95 @@
         "notes": "While Jelliette and Jellroy are in your base, Jellroy’s watering speed is increased.",
         "shortNote": "Increased watering speed if with Jelliette",
         "values": ["+50%", "+60%", "+70%", "+90%", "+120%"]
+    },
+    "WhiteMoth_Neutral": {
+        "farming": "High Quality Cloth"
+    },
+    "IceFox": {
+        "farming": "Ice Organ"
+    },
+    "VioletFairy": {
+        "farming": "Seeds"
+    },
+    "Serpent": {
+        "farming": "Leather"
+    },
+    "NegativeKoala": {
+        "farming": "Venom Gland"
+    },
+    "FlameBambi": {
+        "farming": "Flame Organ"
+    },
+    "ElecCat": {
+        "farming": "Electric Organ"
+    },
+    "DarkCrow": {
+        "farming": "Bone"
+    },
+    "CloverFairy": {
+        "notes": "While at a base, increases the Gathering Work Suitability Level for all other Base Pals by +1.",
+        "shortNote": "Boost Gathering of base pals",
+        "values": ["1", "1", "1", "1", "1"]
+    },
+    "Deer_Ground": {
+        "notes": "While at a base, increases the Lumbering Work Suitability Level for all other Base Pals by +1.",
+        "shortNote": "Boost Lumbering of base pals",
+        "values": ["1", "1", "1", "1", "1"]
+    },
+    "SweetsSheep_Ground": {
+        "notes": "While at a base, reduces Hunger depletion rate of Base Pals by (-15~-25)%. (Does not stack)",
+        "shortNote": "Reduce hunger of base pals",
+        "values": ["-15%", "-17%", "-19%", "-21%", "-25%"],
+        "farming": "Caramel Cotton Candy"
+    },
+    "ClioneTwins": {
+        "notes": "While at a base, increases the Watering Work Suitability Level for all other Base Pals by +1.",
+        "shortNote": "Boost Watering of base pals",
+        "values": ["1", "1", "1", "1", "1"]
+    },
+    "CuteButterfly": {
+        "notes": "While at a base, increases the Farming Work Suitability Level for all other Base Pals by +1.",
+        "shortNote": "Boost Farming of base pals",
+        "values": ["1", "1", "1", "1", "1"]
+    },
+    "ElecPomeranian": {
+        "notes": "While at a base, increases the Generating Electricity Work Suitability Level for all other Base Pals by +1.",
+        "shortNote": "Boost Generating Electricity of base pals",
+        "values": ["1", "1", "1", "1", "1"]
+    },
+    "CatMage_Fire": {
+        "notes": "While at a base, increases the Kindling Work Suitability Level for all other Base Pals by +1.",
+        "shortNote": "Boost Kindling of base pals",
+        "values": ["1", "1", "1", "1", "1"]
+    },
+    "FlowerDoll": {
+        "notes": "While at a base, increases the Planting Work Suitability Level for all other Base Pals by +1.",
+        "shortNote": "Boost Planting of base pals",
+        "values": ["1", "1", "1", "1", "1"]
+    },
+    "Yeti": {
+        "notes": "While at a base, increases the Transporting Work Suitability Level for all other Base Pals by +1.",
+        "shortNote": "Boost Transporting of base pals",
+        "values": ["1", "1", "1", "1", "1"]
+    },
+    "Sekhmet": {
+        "notes": "While at base, boosts Anubis's work speed by (20~40)%. Increases efficiency by (30~60)% if Sekhmet is also working at a Workbench, Workshop, or other related facilities. (Does not stack)",
+        "shortNote": "Boost Anubis's work speed",
+        "values": ["(20%, 30%)", "(24%, 36%)", "(28%, 42%)", "(32%, 48%)", "(40%, 60%)"]
+    },
+    "CubeTurtle": {
+        "notes": "While at a base, increases the Mining Work Suitability Level for all other Base Pals by +1.",
+        "shortNote": "Boost Mining of base pals",
+        "values": ["1", "1", "1", "1", "1"]
+    },
+    "BlackPuppy_Ice": {
+        "notes": "While at a base, increases the Cooling Work Suitability Level for all other Base Pals by +1.",
+        "shortNote": "Boost Cooling of base pals",
+        "values": ["1", "1", "1", "1", "1"]
+    },
+    "MushroomLady": {
+        "notes": "While at a base, increases the Medicine Production Work Suitability Level for all other Base Pals by +1.",
+        "shortNote": "Boost Medicine Production of base pals",
+        "values": ["1", "1", "1", "1", "1"]
     }
 }

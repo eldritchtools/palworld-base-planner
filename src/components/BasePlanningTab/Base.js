@@ -13,7 +13,7 @@ import { tooltipStyle } from "../../styles";
 import FeedbackButton from "../FeedbackButton";
 
 const tableCellStyle = { border: "1px #aaa dotted", padding: "0.2rem", fontSize: "1rem" };
-const segmentHeight = "230px";
+const segmentHeight = "370px";
 
 function Base({ base, baseIndex, sidePanelSelectedPalId }) {
     const [selectedIndex, setSelectedIndex] = useState(null);
@@ -37,7 +37,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
     }
 
 
-    const palDisplayStyle = { display: "flex", flexDirection: "column", width: "100%", height: segmentHeight, border: "1px #aaa solid", borderRadius: "10px" };
+    const palDisplayStyle = { display: "flex", flexDirection: "column", width: "100%", maxHeight: segmentHeight, border: "1px #aaa solid", borderRadius: "10px" };
     if (profileData.plannerLayout === "Horizontal") {
         palDisplayStyle.minWidth = "480px";
         palDisplayStyle.maxWidth = "480px";
@@ -92,11 +92,12 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         }
     };
 
-    const workSuitabilitiesStyle = { height: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
+    const workSuitabilitiesStyle = { maxHeight: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
     if (profileData.plannerLayout === "Horizontal") {
         workSuitabilitiesStyle.minWidth = "550px";
         workSuitabilitiesStyle.maxWidth = "550px";
     }
+
     const workSuitabilitiesComponent = <div style={workSuitabilitiesStyle}>
         <div style={{ textAlign: "start" }}>Work Suitabilities:</div>
         {selectedIndex !== null ?
@@ -125,7 +126,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                         <td style={tableCellStyle}>Current</td>
                         {workSuitabilities.map(work => work.id in base.pals[selectedIndex].currentSuitabilities ?
                             <td style={tableCellStyle}>
-                                <NumberSelector value={base.pals[selectedIndex].currentSuitabilities[work.id]} min={pals[base.pals[selectedIndex].id].workSuitability[work.id]} max={work.id === "farming" ? 2 : 5}
+                                <NumberSelector value={base.pals[selectedIndex].currentSuitabilities[work.id]} min={pals[base.pals[selectedIndex].id].workSuitability[work.id]} max={10}
                                     setValue={e => profileHandler.updatePalCurrentSuitability(profileData, setProfileData, baseIndex, selectedIndex, work.id, e)} />
                             </td> :
                             <td style={tableCellStyle}></td>
@@ -135,7 +136,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                         <td style={tableCellStyle}>Target</td>
                         {workSuitabilities.map(work => work.id in base.pals[selectedIndex].targetSuitabilities ?
                             <td style={tableCellStyle}>
-                                <NumberSelector value={base.pals[selectedIndex].targetSuitabilities[work.id]} min={base.pals[selectedIndex].currentSuitabilities[work.id]} max={work.id === "farming" ? 2 : 5}
+                                <NumberSelector value={base.pals[selectedIndex].targetSuitabilities[work.id]} min={base.pals[selectedIndex].currentSuitabilities[work.id]} max={10}
                                     setValue={e => profileHandler.updatePalTargetSuitability(profileData, setProfileData, baseIndex, selectedIndex, work.id, e)} />
                             </td> :
                             <td style={tableCellStyle}></td>
@@ -151,19 +152,25 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {[1, 2, 3, 4, 5].map(level => <tr>
-                        <td style={tableCellStyle}>{level}</td>
-                        {workSuitabilities.map(work => <td style={tableCellStyle}>
-                            {workSuitabilitiesRemoveZero(level, work)}
-                        </td>)}
-                    </tr>)}
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                        .filter(x => base.pals.some(pal =>
+                            profileData.shownValues === "Current Only" ?
+                                Object.values(pal.currentSuitabilities).some(y => x === y) :
+                                Object.values(pal.currentSuitabilities).some(y => x === y) || Object.values(pal.targetSuitabilities).some(y => x === y)
+                        ))
+                        .map(level => <tr>
+                            <td style={tableCellStyle}>{level}</td>
+                            {workSuitabilities.map(work => <td style={tableCellStyle}>
+                                {workSuitabilitiesRemoveZero(level, work)}
+                            </td>)}
+                        </tr>)}
                     <tr>
                         <td style={tableCellStyle} data-tooltip-id={`books-${baseIndex}`}>Books
                             <Tooltip id={`books-${baseIndex}`} style={tooltipStyle}>Reduced by 1 for pals whose target condense level is 4</Tooltip>
                         </td>
 
                         {workSuitabilities.map(work => <td style={tableCellStyle}>
-                            {work.id === "farming" ? null : base.pals.reduce((acc, pal) =>
+                            {base.pals.reduce((acc, pal) =>
                                 work.id in pal.currentSuitabilities && pal.enabledWork[work.id] ?
                                     acc + Math.max(0, pal.targetSuitabilities[work.id] - pal.currentSuitabilities[work.id] - (pal.targetCondenseLevel === 4 && pal.currentCondenseLevel < 4 ? 1 : 0)) :
                                     acc, 0)}
@@ -174,7 +181,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         }
     </div>;
 
-    const passivesStyle = { height: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
+    const passivesStyle = { maxHeight: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
     if (profileData.plannerLayout === "Horizontal") {
         passivesStyle.minWidth = "290px";
     }
@@ -196,7 +203,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                         text={"Copy to All Pals in Base"} feedbackText={"Copied!"} />
                 </div>
             </div> :
-            <div style={{ display: "grid", gridTemplateColumns: "fit-content(50px) 1fr", height: "90%", width: "100%", alignItems: "center", gap: "0.5rem", overflowY: "auto" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "fit-content(50px) 1fr", maxHeight: "90%", width: "100%", alignItems: "center", gap: "0.5rem", overflowY: "auto" }}>
                 {
                     Object.entries(base.pals.reduce((acc, pal) => {
                         pal.passives.forEach(passive => passive in acc ? acc[passive] += 1 : acc[passive] = 1);
@@ -220,7 +227,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         }
     };
 
-    const condensationStyle = { height: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
+    const condensationStyle = { maxHeight: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
     if (profileData.plannerLayout === "Horizontal") {
         condensationStyle.minWidth = "220px";
     }
@@ -273,7 +280,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                         }, {})).filter(([_, num]) => num > 0).map(([id, num]) => [
                             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                                 <PalIcon id={id} circle={true} size={32} />
-                                <span>{pals[id].name}</span>
+                                <span style={{textAlign: "start"}}>{pals[id].name}</span>
                             </div>,
                             <div>
                                 {num}
@@ -285,7 +292,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         </div>
     </div>;
 
-    const enhancementStyle = { height: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
+    const enhancementStyle = { maxHeight: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
     if (profileData.plannerLayout === "Horizontal") {
         enhancementStyle.minWidth = "200px";
     }
@@ -315,8 +322,8 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                     text={"Copy to All Pals in Base"} feedbackText={"Copied!"} />
             </div>
         ] : [
-            <div style={{ width: "100%", textAlign: "start" }}>Current Average: {base.pals.reduce(
-                (acc, pal) => { acc += pal.currentWorkSpeedEnhancement; return acc; }, 0) / Math.max(base.pals.length, 1)}%</div>,
+            <div style={{ width: "100%", textAlign: "start" }}>Current Average: {+(base.pals.reduce(
+                (acc, pal) => { acc += pal.currentWorkSpeedEnhancement; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%</div>,
             <div style={{ width: "100%", textAlign: "start" }}>Target Average: {+(base.pals.reduce(
                 (acc, pal) => { acc += pal.targetWorkSpeedEnhancement; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%</div>,
             <div style={{ width: "100%", textAlign: "start" }}>Cost:</div>,
@@ -329,7 +336,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         ]}
     </div>;
 
-    const otherStyle = { height: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
+    const otherStyle = { maxHeight: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
     if (profileData.plannerLayout === "Horizontal") {
         otherStyle.minWidth = "180px";
     }
@@ -360,9 +367,9 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         <textarea style={{ height: "95%", flex: 1 }} value={base.notes} onChange={(e) => profileHandler.setBaseNotes(profileData, setProfileData, baseIndex, e.target.value)} />
     </div>
 
-    const containerStyle = { border: "2px #777 solid", borderRadius: "1rem", display: "flex", alignItems: "center", justifyContent: "center", boxSizing: "border-box" };
+    const containerStyle = { border: "2px #777 solid", borderRadius: "1rem", padding: "0.5rem", display: "flex", alignItems: "center", justifyContent: "center", boxSizing: "border-box" };
     if (profileData.plannerLayout === "Horizontal") {
-        containerStyle.height = "350px";
+        containerStyle.height = "auto";
         containerStyle.width = "100%";
     } else {
         containerStyle.height = "100%";

@@ -88,7 +88,7 @@ function SettingsComponent() {
                 valueComponent={<LeftRightOption options={["Horizontal", "Vertical"]} value={profileData.plannerLayout} setValue={v => profileHandler.setProfilePlannerLayout(profileData, setProfileData, v)} />} />
             <Setting name={"Shown Values in Summary"} tooltip={"Whether to show only the current or both the current and target values when viewing the base summary.\nFilling in target values is only relevant if you want to see how many resources you need to achieve that target,\notherwise it's fine if you only fill in current values."}
                 valueComponent={<LeftRightOption options={["Current Only", "Current and Target"]} value={profileData.shownValues} setValue={v => profileHandler.setProfileShownValues(profileData, setProfileData, v)} />} />
-            <Setting name={"Default Work Suitabilities"} tooltip={"Work suitability levels to assign to newly added pals\n'Use Starting Levels' assigns the pal's normal levels to both current and target\n'Set Target to Max' retains the normal levels for current but sets target to 5\n'Set Current and Target to Max' sets both current and target to 5"}
+            <Setting name={"Default Work Suitabilities"} tooltip={"Work suitability levels to assign to newly added pals\n'Use Starting Levels' assigns the pal's normal levels to both current and target\n'Set Target to Max' retains the normal levels for current but sets target to 10\n'Set Current and Target to Max' sets both current and target to 10"}
                 valueComponent={<LeftRightOption options={["Use Starting Levels", "Set Target to Max", "Set Current and Target to Max"]} value={profileData.defaultWork} setValue={v => profileHandler.setProfileDefaultWork(profileData, setProfileData, v)} />} />
             <Setting name={"Default Passives"} tooltip={"Passives to assign to newly added pals"}
                 valueComponent={<button onClick={openPassives} >Set Passives</button>} />
@@ -232,7 +232,7 @@ function ProfilesComponent() {
                 </div>
             </div>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "100%", gap: "2rem" }}>
-                <div style={{fontSize: "1.2rem", fontWeight: "bold"}}>Current Profile: {currentProfile}</div>
+                <div style={{ fontSize: "1.2rem", fontWeight: "bold" }}>Current Profile: {currentProfile}</div>
                 <div style={{ display: "flex", flexDirection: "column", width: "250px", justifyContent: "center", gap: "1rem" }}>
                     <button onClick={() => setAddProfileIsOpen(true)}>Create New Profile</button>
                     <button onClick={handleSwitchProfileButton}>Switch to Selected Profile</button>
@@ -272,7 +272,7 @@ function ProfilesComponent() {
 
         <Modal isOpen={exportProfileIsOpen} onClose={closeExportProfile}>
             <h3>Copy the following string to import '{selected}' to another device</h3>
-            <textarea style={{height: "5rem", width: "90%"}} ref={textAreaRef} readOnly={true} value={dataString} onClick={handleCopy}/>
+            <textarea style={{ height: "5rem", width: "90%" }} ref={textAreaRef} readOnly={true} value={dataString} onClick={handleCopy} />
             <div>{copySuccess ?? null}</div>
             <div style={{ display: "flex", justifyContent: "end", gap: "2" }}>
                 <button onClick={closeExportProfile}>Close</button>
@@ -283,7 +283,7 @@ function ProfilesComponent() {
             <h3>Input name of new profile:</h3>
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} autoFocus />
             <h3>Input exported data string:</h3>
-            <textarea style={{height: "5rem", width: "90%"}} value={dataString} onChange={e => setDataString(e.target.value)}/>
+            <textarea style={{ height: "5rem", width: "90%" }} value={dataString} onChange={e => setDataString(e.target.value)} />
             <div style={{ display: "flex", justifyContent: "end", gap: "2" }}>
                 <button onClick={closeImportProfile}>Cancel</button>
                 <button onClick={handleImportProfile}>Import</button>
@@ -294,9 +294,11 @@ function ProfilesComponent() {
 
 function SettingsProfilesTab() {
 
-    return <div style={{ height: "auto", width: "80%", display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(800px, 1fr))", gap: "1rem" }}>
-        <SettingsComponent />
-        <ProfilesComponent />
+    return <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+        <div style={{ height: "auto", width: "80%", display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(800px, 1fr))", gap: "1rem" }}>
+            <SettingsComponent />
+            <ProfilesComponent />
+        </div>
     </div>;
 }
 

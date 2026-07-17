@@ -5,9 +5,10 @@ import WorkPriorities from "./WorkPriorities";
 import WorkType from "./WorkType";
 
 function WorkSuitabilitiesTab() {
-    return <div style={{ height: "auto", width: "90%" }}>
+    return <div style={{ height: "auto", width: "100%" }}>
+        <span style={{fontWeight: "bold"}}>Warning: This page has largely not been updated for 1.0. The numbers may have been updated, but the notable pals and descriptions are not.</span>
+
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(1000px, 1fr)", gap: "0.5rem" }}>
-            
             <div><WorkBonuses /></div>
             <div><WorkPriorities /></div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(500px, 1fr)", gap: "0.5rem" }}>

@@ -1,6 +1,6 @@
 import { Icon } from "../../Icon";
 
-const condenseCounts = [4, 16, 32, 64];
+const condenseCounts = [4, 8, 12, 24];
 
 function getCondenseCounts(start, end) {
     let count = 0;

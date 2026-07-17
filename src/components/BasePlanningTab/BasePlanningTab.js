@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 
 import "./BasePlanningTab.css"
-import { useProfiles } from "@eldritchtools/shared-components";
+import { useBreakpoint, useProfiles } from "@eldritchtools/shared-components";
 import { pals, PalIcon, palIdSortFunc, checkPalSearchMatch } from "@eldritchtools/palworld-shared-library";
 import { WorkIcon, workSuitabilities } from "../workSuitabilities";
 import palNotes from '../../data/palNotes.json';
@@ -62,8 +62,13 @@ function SidePanel({ selectedPalId, setSelectedPalId }) {
         setSpecialEffectsToggle(!specialEffectsToggle);
     }
 
+    const [suitabilityFilterStrict, setSuitabilityFilterStrict] = useState(true);
+
     const filterComponents = <div style={{ display: "flex", flexDirection: "column" }}>
-        <span style={{ fontSize: "1rem", fontWeight: "bold" }}>Filters</span>
+        <div style={{ display: "flex", gap: "0.2rem", alignItems: "center" }}>
+            <span style={{ fontSize: "1rem", fontWeight: "bold" }}>Filters:</span>
+            <button onClick={() => setSuitabilityFilterStrict(p => !p)}>{suitabilityFilterStrict ? "Require All" : "Require Any"}</button>
+        </div>
         {suitabilityComponents}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)" }}>
             <div
@@ -93,7 +98,11 @@ function SidePanel({ selectedPalId, setSelectedPalId }) {
 
     const filteredPals = useMemo(() => Object.entries(pals).filter(([_, pal]) => {
         if (searchString !== "" && !checkPalSearchMatch(searchString, pal)) return false;
-        if (suitabilitiesSelection.length !== 0 && !Object.keys(pal.workSuitability).some(x => suitabilitiesSelection.includes(x))) return false;
+        if(suitabilityFilterStrict) {
+            if (suitabilitiesSelection.length !== 0 && !suitabilitiesSelection.every(x => Object.keys(pal.workSuitability).includes(x))) return false;
+        } else {
+            if (suitabilitiesSelection.length !== 0 && !suitabilitiesSelection.some(x => Object.keys(pal.workSuitability).includes(x))) return false;
+        }
         if (nocturnalToggle && !pal.nocturnal) return false;
         if (specialEffectsToggle && !(pal.id in palNotes && "notes" in palNotes[pal.id])) return false;
         return true;
@@ -104,7 +113,7 @@ function SidePanel({ selectedPalId, setSelectedPalId }) {
             case "work": return comparePalWorkSuitabilities(a[1], b[1], suitabilitiesSelection);
             default: return palIdSortFunc(a[0], b[0]);
         }
-    }).map(([_, pal]) => pal), [searchString, suitabilitiesSelection, nocturnalToggle, specialEffectsToggle, sortSelection]);
+    }).map(([_, pal]) => pal), [searchString, suitabilityFilterStrict, suitabilitiesSelection, nocturnalToggle, specialEffectsToggle, sortSelection]);
 
     const handlePalClick = (palId) => {
         selectedPalId === palId ? setSelectedPalId(null) : setSelectedPalId(palId);
@@ -131,7 +140,7 @@ function SidePanel({ selectedPalId, setSelectedPalId }) {
         </div>
     </div>
 
-    return <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%", borderRight: "1px #aaa solid" }}>
+    return <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%", borderRight: "1px #aaa solid", gap: "0.2rem" }}>
         <div>
             <span data-tooltip-id="selectPalToAdd" style={{ fontWeight: "bold", borderBottom: "1px #aaa dotted" }}>
                 Select Pal to Add
@@ -148,9 +157,10 @@ function SidePanel({ selectedPalId, setSelectedPalId }) {
 
 function BasesDisplay({ selectedPalId }) {
     const { profileData } = useProfiles();
+    const { isMobile } = useBreakpoint();
 
     const style = { height: "100%", width: "100%", gap: "0.2rem", padding: "1rem", boxSizing: "border-box" };
-    if (profileData.plannerLayout === "Horizontal") {
+    if (profileData.plannerLayout === "Horizontal" || isMobile) {
         style.display = "flex";
         style.flexDirection = "column";
         style.overflowX = "hidden";
@@ -172,12 +182,13 @@ function BasesDisplay({ selectedPalId }) {
 
 function BasePlanningTab() {
     const [selectedPalId, setSelectedPalId] = useState(null);
+    const { isMobile } = useBreakpoint();
 
-    return <div style={{ height: "90vh", width: "100%", display: "flex" }}>
-        <div style={{ height: "100%", minWidth: "480px", width: "480px" }}>
+    return <div style={{ height: "90vh", width: "100%", display: "flex", flexDirection: isMobile ? "column" : "row" }}>
+        <div style={{ height: isMobile ? "500px" : "100%", width: "100%", maxWidth: "min(95vw, 480px)" }}>
             <SidePanel selectedPalId={selectedPalId} setSelectedPalId={setSelectedPalId} />
         </div>
-        <div style={{ height: "100%", width: "calc(100% - 480px)" }}>
+        <div style={{ height: "100%", width: isMobile ? "100%" : "calc(100% - 480px)" }}>
             <BasesDisplay selectedPalId={selectedPalId} />
         </div>
     </div>;
