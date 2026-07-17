@@ -319,7 +319,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                     <div {...props} style={{ ...props.style, height: "12px", width: "12px", borderRadius: "50%", backgroundColor: "#0af" }} />
                 )}
             />
-            <div style={{fontSize: "0.8rem"}}>
+            <div style={{ fontSize: "0.8rem" }}>
                 Current: {values[0]}% | Target: {values[1]}%
             </div>
         </div>
@@ -383,34 +383,26 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         </> : <>
             <span>Average Health:</span>
             <div style={{ fontSize: "0.8rem", marginBottom: "0.2rem" }}>
-                Current: {+(base.pals.reduce((acc, pal) => 
-                    { acc += pal.currentHealthEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}% |
-                Target: {+(base.pals.reduce((acc, pal) => 
-                    { acc += pal.targetHealthEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%
+                Current: {+(base.pals.reduce((acc, pal) => { acc += pal.currentHealthEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}% |
+                Target: {+(base.pals.reduce((acc, pal) => { acc += pal.targetHealthEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%
             </div>
-            
+
             <span>Average Attack:</span>
             <div style={{ fontSize: "0.8rem", marginBottom: "0.2rem" }}>
-                Current: {+(base.pals.reduce((acc, pal) => 
-                    { acc += pal.currentAttackEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}% |
-                Target: {+(base.pals.reduce((acc, pal) => 
-                    { acc += pal.targetAttackEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%
+                Current: {+(base.pals.reduce((acc, pal) => { acc += pal.currentAttackEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}% |
+                Target: {+(base.pals.reduce((acc, pal) => { acc += pal.targetAttackEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%
             </div>
-            
+
             <span>Average Defense:</span>
             <div style={{ fontSize: "0.8rem", marginBottom: "0.2rem" }}>
-                Current: {+(base.pals.reduce((acc, pal) => 
-                    { acc += pal.currentDefenseEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}% |
-                Target: {+(base.pals.reduce((acc, pal) => 
-                    { acc += pal.targetDefenseEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%
+                Current: {+(base.pals.reduce((acc, pal) => { acc += pal.currentDefenseEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}% |
+                Target: {+(base.pals.reduce((acc, pal) => { acc += pal.targetDefenseEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%
             </div>
-            
+
             <span>Average Work Speed:</span>
             <div style={{ fontSize: "0.8rem", marginBottom: "0.2rem" }}>
-                Current: {+(base.pals.reduce((acc, pal) => 
-                    { acc += pal.currentWorkSpeedEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}% |
-                Target: {+(base.pals.reduce((acc, pal) => 
-                    { acc += pal.targetWorkSpeedEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%
+                Current: {+(base.pals.reduce((acc, pal) => { acc += pal.currentWorkSpeedEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}% |
+                Target: {+(base.pals.reduce((acc, pal) => { acc += pal.targetWorkSpeedEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%
             </div>
 
             <div style={{ width: "100%", textAlign: "start" }}>Cost:</div>
@@ -433,12 +425,14 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
         <div style={{ flex: 1, display: "flex", flexDirection: "column", width: "100%", overflowY: "auto" }} >
             {base.pals.filter(pal => pal.id in palNotes).map(pal => <div style={{ display: "flex", flexDirection: "row", gap: "0.2rem", alignItems: "center", textAlign: "start", border: "1px #aaa dotted" }}>
                 <PalIcon id={pal.id} size={32} circle={true} />
-                {"farming" in palNotes[pal.id] ? <span>Ranch: {palNotes[pal.id].farming}</span> : null}
-                {"shortNote" in palNotes[pal.id] ?
-                    pal.currentCondenseLevel === pal.targetCondenseLevel ?
-                        <span>{palNotes[pal.id].values[pal.currentCondenseLevel]} {palNotes[pal.id].shortNote}</span> :
-                        <span>{palNotes[pal.id].values[pal.currentCondenseLevel]} to {palNotes[pal.id].values[pal.targetCondenseLevel]} {palNotes[pal.id].shortNote}</span> :
-                    null}
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    {"farming" in palNotes[pal.id] ? <span>Ranch: {palNotes[pal.id].farming}</span> : null}
+                    {"shortNote" in palNotes[pal.id] ?
+                        pal.currentCondenseLevel === pal.targetCondenseLevel ?
+                            <span>{palNotes[pal.id].values[pal.currentCondenseLevel]} {palNotes[pal.id].shortNote}</span> :
+                            <span>{palNotes[pal.id].values[pal.currentCondenseLevel]} to {palNotes[pal.id].values[pal.targetCondenseLevel]} {palNotes[pal.id].shortNote}</span> :
+                        null}
+                </div>
             </div>)}
         </div>
     </div>
