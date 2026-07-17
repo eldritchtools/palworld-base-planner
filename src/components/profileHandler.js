@@ -40,6 +40,14 @@ function setProfileDefaultTargetEnhancement(profileData, setProfileData, level) 
     setProfileData({ ...profileData, defaultTargetEnhancement: level })
 }
 
+function setProfileDefaultCurrentCombatEnhancement(profileData, setProfileData, level) {
+    setProfileData({ ...profileData, defaultCurrentCombatEnhancement: level })
+}
+
+function setProfileDefaultTargetCombatEnhancement(profileData, setProfileData, level) {
+    setProfileData({ ...profileData, defaultTargetCombatEnhancement: level })
+}
+
 function addBase(profileData, setProfileData, name) {
     const newBase = { name: name, pals: [], notes: "" };
     setProfileData({ ...profileData, bases: [...profileData.bases, newBase] })
@@ -102,6 +110,12 @@ function addPalToBaseById(profileData, setProfileData, baseIndex, palId) {
         targetCondenseLevel: profileData.defaultTargetCondensationLevel ?? 0,
         currentWorkSpeedEnhancement: profileData.defaultCurrentEnhancement ?? 0,
         targetWorkSpeedEnhancement: profileData.defaultTargetEnhancement ?? 0,
+        currentHealthEnhancement: profileData.defaultCurrentCombatEnhancement ?? 0,
+        targetHealthEnhancement: profileData.defaultTargetCombatEnhancement ?? 0,
+        currentAttackEnhancement: profileData.defaultCurrentCombatEnhancement ?? 0,
+        targetAttackEnhancement: profileData.defaultTargetCombatEnhancement ?? 0,
+        currentDefenseEnhancement: profileData.defaultCurrentCombatEnhancement ?? 0,
+        targetDefenseEnhancement: profileData.defaultTargetCombatEnhancement ?? 0,
         enabledWork: Object.keys(pals[palId].workSuitability).reduce((acc, key) => { acc[key] = true; return acc }, {})
     };
     updateBase(profileData, setProfileData, baseIndex, base => { base.pals.push(newPal); return base; })
@@ -224,19 +238,31 @@ function copyPalCondenseLevel(profileData, setProfileData, baseIndex, palIndex, 
     )
 }
 
-function setPalCurrentWorkSpeedEnhancement(profileData, setProfileData, baseIndex, palIndex, enhancement) {
+function setPalHealthEnhancement(profileData, setProfileData, baseIndex, palIndex, cur, tar) {
     updatePal(profileData, setProfileData, baseIndex, palIndex,
-        pal => { return { ...pal, currentWorkSpeedEnhancement: enhancement } }
+        pal => { return { ...pal, currentHealthEnhancement: cur, targetHealthEnhancement: tar } }
     )
 }
 
-function setPalTargetWorkSpeedEnhancement(profileData, setProfileData, baseIndex, palIndex, enhancement) {
+function setPalAttackEnhancement(profileData, setProfileData, baseIndex, palIndex, cur, tar) {
     updatePal(profileData, setProfileData, baseIndex, palIndex,
-        pal => { return { ...pal, targetWorkSpeedEnhancement: enhancement } }
+        pal => { return { ...pal, currentAttackEnhancement: cur, targetAttackEnhancement: tar } }
     )
 }
 
-function copyPalWorkSpeedEnhancement(profileData, setProfileData, baseIndex, palIndex, sameOrAll) {
+function setPalDefenseEnhancement(profileData, setProfileData, baseIndex, palIndex, cur, tar) {
+    updatePal(profileData, setProfileData, baseIndex, palIndex,
+        pal => { return { ...pal, currentDefenseEnhancement: cur, targetDefenseEnhancement: tar } }
+    )
+}
+
+function setPalWorkSpeedEnhancement(profileData, setProfileData, baseIndex, palIndex, cur, tar) {
+    updatePal(profileData, setProfileData, baseIndex, palIndex,
+        pal => { return { ...pal, currentWorkSpeedEnhancement: cur, targetWorkSpeedEnhancement: tar } }
+    )
+}
+
+function copyPalEnhancement(profileData, setProfileData, baseIndex, palIndex, sameOrAll) {
     updateBase(profileData, setProfileData, baseIndex,
         base => {
             return {
@@ -245,6 +271,12 @@ function copyPalWorkSpeedEnhancement(profileData, setProfileData, baseIndex, pal
                     if (sameOrAll === "same") {
                         if (base.pals[palIndex].id === pal.id) return {
                             ...pal,
+                            currentHealthEnhancement: base.pals[palIndex].currentHealthEnhancement,
+                            targetHealthEnhancement: base.pals[palIndex].targetHealthEnhancement,
+                            currentAttackEnhancement: base.pals[palIndex].currentAttackEnhancement,
+                            targetAttackEnhancement: base.pals[palIndex].targetAttackEnhancement,
+                            currentDefenseEnhancement: base.pals[palIndex].currentDefenseEnhancement,
+                            targetDefenseEnhancement: base.pals[palIndex].targetDefenseEnhancement,
                             currentWorkSpeedEnhancement: base.pals[palIndex].currentWorkSpeedEnhancement,
                             targetWorkSpeedEnhancement: base.pals[palIndex].targetWorkSpeedEnhancement
                         }
@@ -252,6 +284,12 @@ function copyPalWorkSpeedEnhancement(profileData, setProfileData, baseIndex, pal
                     } else if (sameOrAll === "all") {
                         return {
                             ...pal,
+                            currentHealthEnhancement: base.pals[palIndex].currentHealthEnhancement,
+                            targetHealthEnhancement: base.pals[palIndex].targetHealthEnhancement,
+                            currentAttackEnhancement: base.pals[palIndex].currentAttackEnhancement,
+                            targetAttackEnhancement: base.pals[palIndex].targetAttackEnhancement,
+                            currentDefenseEnhancement: base.pals[palIndex].currentDefenseEnhancement,
+                            targetDefenseEnhancement: base.pals[palIndex].targetDefenseEnhancement,
                             currentWorkSpeedEnhancement: base.pals[palIndex].currentWorkSpeedEnhancement,
                             targetWorkSpeedEnhancement: base.pals[palIndex].targetWorkSpeedEnhancement
                         }
@@ -283,6 +321,8 @@ export {
     setProfileDefaultTargetCondensationLevel,
     setProfileDefaultCurrentEnhancement,
     setProfileDefaultTargetEnhancement,
+    setProfileDefaultCurrentCombatEnhancement,
+    setProfileDefaultTargetCombatEnhancement,
     addBase,
     deleteBase,
     swapBaseOrder,
@@ -300,8 +340,10 @@ export {
     setPalCurrentCondenseLevel,
     setPalTargetCondenseLevel,
     copyPalCondenseLevel,
-    setPalCurrentWorkSpeedEnhancement,
-    setPalTargetWorkSpeedEnhancement,
-    copyPalWorkSpeedEnhancement,
+    setPalHealthEnhancement,
+    setPalAttackEnhancement,
+    setPalDefenseEnhancement,
+    setPalWorkSpeedEnhancement,
+    copyPalEnhancement,
     togglePalEnabledWork
 };

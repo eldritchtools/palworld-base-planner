@@ -11,6 +11,7 @@ import palNotes from '../../data/palNotes.json';
 import { Tooltip } from "react-tooltip";
 import { tooltipStyle } from "../../styles";
 import FeedbackButton from "../FeedbackButton";
+import { Range, getTrackBackground } from "react-range";
 
 const tableCellStyle = { border: "1px #aaa dotted", padding: "0.2rem", fontSize: "1rem" };
 const segmentHeight = "370px";
@@ -280,7 +281,7 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                         }, {})).filter(([_, num]) => num > 0).map(([id, num]) => [
                             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                                 <PalIcon id={id} circle={true} size={32} />
-                                <span style={{textAlign: "start"}}>{pals[id].name}</span>
+                                <span style={{ textAlign: "start" }}>{pals[id].name}</span>
                             </div>,
                             <div>
                                 {num}
@@ -296,45 +297,132 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
     if (profileData.plannerLayout === "Horizontal") {
         enhancementStyle.minWidth = "200px";
     }
+
+    const makeEnhancementSlider = (values, onChange) =>
+        <div style={{ width: "90%" }}>
+            <Range
+                values={values[1] < values[0] ? [values[0], values[0]] : values}
+                step={3} min={0} max={60}
+                onChange={onChange}
+                renderTrack={({ props, children }) => (
+                    <div
+                        {...props}
+                        style={{
+                            ...props.style, height: "6px", width: "100%", margin: "2px 0",
+                            background: getTrackBackground({ values, colors: ["white", "#0af", "white"], min: 0, max: 60 }),
+                        }}
+                    >
+                        {children}
+                    </div>
+                )}
+                renderThumb={({ props }) => (
+                    <div {...props} style={{ ...props.style, height: "12px", width: "12px", borderRadius: "50%", backgroundColor: "#0af" }} />
+                )}
+            />
+            <div style={{fontSize: "0.8rem"}}>
+                Current: {values[0]}% | Target: {values[1]}%
+            </div>
+        </div>
+
+    const getTotalEnhanceCost = pal => {
+        const health = getEnhanceCosts(pal.currentHealthEnhancement ?? 0, pal.targetHealthEnhancement ?? 0);
+        const attack = getEnhanceCosts(pal.currentAttackEnhancement ?? 0, pal.targetAttackEnhancement ?? 0);
+        const defense = getEnhanceCosts(pal.currentDefenseEnhancement ?? 0, pal.targetDefenseEnhancement ?? 0);
+        const workSpeed = getEnhanceCosts(pal.currentWorkSpeedEnhancement ?? 0, pal.targetWorkSpeedEnhancement ?? 0);
+        return [
+            health[0] + attack[0] + defense[0] + workSpeed[0],
+            health[1] + attack[1] + defense[1] + workSpeed[1],
+            health[2] + attack[2] + defense[2] + workSpeed[2],
+            health[3] + attack[3] + defense[3] + workSpeed[3]
+        ]
+    }
+
     const enhancementComponent = <div style={enhancementStyle}>
-        <div style={{ width: "100%", textAlign: "start" }}>Work Speed Enhancement:</div>
-        {selectedIndex !== null ? [
-            <div style={{ display: "grid", gridTemplateColumns: "fit-content(1px) 1fr fit-content(1px)", alignItems: "center" }} >
-                <span>Current:</span>
-                <input type="range" min="0" max="60" step="3" value={base.pals[selectedIndex].currentWorkSpeedEnhancement}
-                    onChange={(e) => profileHandler.setPalCurrentWorkSpeedEnhancement(profileData, setProfileData, baseIndex, selectedIndex, parseInt(e.target.value))} />
-                <span>{base.pals[selectedIndex].currentWorkSpeedEnhancement}%</span>
-                <span>Target:</span>
-                <input type="range" min="0" max="60" step="3" value={base.pals[selectedIndex].targetWorkSpeedEnhancement}
-                    onChange={(e) => profileHandler.setPalTargetWorkSpeedEnhancement(profileData, setProfileData, baseIndex, selectedIndex, parseInt(e.target.value))} />
-                <span>{base.pals[selectedIndex].targetWorkSpeedEnhancement}%</span>
-            </div>,
-            <div style={{ width: "100%", textAlign: "start" }}>Cost:</div>,
+        <div style={{ width: "100%", textAlign: "start" }}>Pal Soul Enhancement:</div>
+        {selectedIndex !== null ? <>
+            <span>Health</span>
+            {makeEnhancementSlider(
+                [base.pals[selectedIndex].currentHealthEnhancement ?? 0, base.pals[selectedIndex].targetHealthEnhancement ?? 0],
+                ([c, t]) => {
+                    profileHandler.setPalHealthEnhancement(profileData, setProfileData, baseIndex, selectedIndex, c, t);
+                }
+            )}
+            <span>Attack</span>
+            {makeEnhancementSlider(
+                [base.pals[selectedIndex].currentAttackEnhancement ?? 0, base.pals[selectedIndex].targetAttackEnhancement ?? 0],
+                ([c, t]) => {
+                    profileHandler.setPalAttackEnhancement(profileData, setProfileData, baseIndex, selectedIndex, c, t);
+                }
+            )}
+            <span>Defense</span>
+            {makeEnhancementSlider(
+                [base.pals[selectedIndex].currentDefenseEnhancement ?? 0, base.pals[selectedIndex].targetDefenseEnhancement ?? 0],
+                ([c, t]) => {
+                    profileHandler.setPalDefenseEnhancement(profileData, setProfileData, baseIndex, selectedIndex, c, t);
+                }
+            )}
+            <span>Work Speed</span>
+            {makeEnhancementSlider(
+                [base.pals[selectedIndex].currentWorkSpeedEnhancement ?? 0, base.pals[selectedIndex].targetWorkSpeedEnhancement ?? 0],
+                ([c, t]) => {
+                    profileHandler.setPalWorkSpeedEnhancement(profileData, setProfileData, baseIndex, selectedIndex, c, t);
+                }
+            )}
+            <div style={{ width: "100%", textAlign: "start" }}>Cost:</div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.2rem" }}>
-                {getEnhanceCosts(base.pals[selectedIndex].currentWorkSpeedEnhancement, base.pals[selectedIndex].targetWorkSpeedEnhancement).map(
+                {getTotalEnhanceCost(base.pals[selectedIndex]).map(
                     (cost, level) => [<CondenseIcon level={level} size={32} />, <span>x{cost}</span>]).flat()
                 }
-            </div>,
+            </div>
             <div style={{ display: "flex" }}>
-                <FeedbackButton style={{ flex: 1 }} onClick={() => profileHandler.copyPalWorkSpeedEnhancement(profileData, setProfileData, baseIndex, selectedIndex, "same")}
+                <FeedbackButton style={{ flex: 1 }} onClick={() => profileHandler.copyPalEnhancement(profileData, setProfileData, baseIndex, selectedIndex, "same")}
                     text={"Copy to Same Pals in Base"} feedbackText={"Copied!"} />
-                <FeedbackButton style={{ flex: 1 }} onClick={() => profileHandler.copyPalWorkSpeedEnhancement(profileData, setProfileData, baseIndex, selectedIndex, "all")}
+                <FeedbackButton style={{ flex: 1 }} onClick={() => profileHandler.copyPalEnhancement(profileData, setProfileData, baseIndex, selectedIndex, "all")}
                     text={"Copy to All Pals in Base"} feedbackText={"Copied!"} />
             </div>
-        ] : [
-            <div style={{ width: "100%", textAlign: "start" }}>Current Average: {+(base.pals.reduce(
-                (acc, pal) => { acc += pal.currentWorkSpeedEnhancement; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%</div>,
-            <div style={{ width: "100%", textAlign: "start" }}>Target Average: {+(base.pals.reduce(
-                (acc, pal) => { acc += pal.targetWorkSpeedEnhancement; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%</div>,
-            <div style={{ width: "100%", textAlign: "start" }}>Cost:</div>,
+        </> : <>
+            <span>Average Health:</span>
+            <div style={{ fontSize: "0.8rem", marginBottom: "0.2rem" }}>
+                Current: {+(base.pals.reduce((acc, pal) => 
+                    { acc += pal.currentHealthEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}% |
+                Target: {+(base.pals.reduce((acc, pal) => 
+                    { acc += pal.targetHealthEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%
+            </div>
+            
+            <span>Average Attack:</span>
+            <div style={{ fontSize: "0.8rem", marginBottom: "0.2rem" }}>
+                Current: {+(base.pals.reduce((acc, pal) => 
+                    { acc += pal.currentAttackEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}% |
+                Target: {+(base.pals.reduce((acc, pal) => 
+                    { acc += pal.targetAttackEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%
+            </div>
+            
+            <span>Average Defense:</span>
+            <div style={{ fontSize: "0.8rem", marginBottom: "0.2rem" }}>
+                Current: {+(base.pals.reduce((acc, pal) => 
+                    { acc += pal.currentDefenseEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}% |
+                Target: {+(base.pals.reduce((acc, pal) => 
+                    { acc += pal.targetDefenseEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%
+            </div>
+            
+            <span>Average Work Speed:</span>
+            <div style={{ fontSize: "0.8rem", marginBottom: "0.2rem" }}>
+                Current: {+(base.pals.reduce((acc, pal) => 
+                    { acc += pal.currentWorkSpeedEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}% |
+                Target: {+(base.pals.reduce((acc, pal) => 
+                    { acc += pal.targetWorkSpeedEnhancement ?? 0; return acc; }, 0) / Math.max(base.pals.length, 1)).toFixed(2)}%
+            </div>
+
+            <div style={{ width: "100%", textAlign: "start" }}>Cost:</div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.2rem", alignItems: "center" }}>
                 {base.pals.reduce((acc, pal) => {
-                    const cost = getEnhanceCosts(pal.currentWorkSpeedEnhancement, pal.targetWorkSpeedEnhancement);
+                    const cost = getTotalEnhanceCost(pal);
                     return acc.map((c, i) => c + cost[i]);
                 }, [0, 0, 0, 0]).map((cost, level) => [<CondenseIcon level={level} size={32} />, <span>x{cost}</span>]).flat()}
             </div>
-        ]}
-    </div>;
+        </>
+        }
+    </div >;
 
     const otherStyle = { maxHeight: segmentHeight, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" };
     if (profileData.plannerLayout === "Horizontal") {
@@ -401,10 +489,10 @@ function Base({ base, baseIndex, sidePanelSelectedPalId }) {
                         </span>
                     </div>
 
-                    <div style={{ display: "flex", flexDirection: "row", gap: "0.5rem" }}>
+                    <div style={{ display: "flex", flexDirection: "row", gap: "0.2rem" }}>
                         {palDisplayComponent}
                         {workSuitabilitiesComponent}
-                        <div style={{ display: "flex", flexDirection: "row", gap: "0.5rem", overflowX: "auto" }} >
+                        <div style={{ display: "flex", flexDirection: "row", gap: "0.25rem", overflowX: "auto" }} >
                             {passivesComponent}
                             {condensationComponent}
                             {enhancementComponent}

@@ -159,7 +159,7 @@ function BasesDisplay({ selectedPalId }) {
     const { profileData } = useProfiles();
     const { isMobile } = useBreakpoint();
 
-    const style = { height: "100%", width: "100%", gap: "0.2rem", padding: "1rem", boxSizing: "border-box" };
+    const style = { height: "100%", width: "100%", gap: "0.2rem", padding: ".5rem", boxSizing: "border-box" };
     if (profileData.plannerLayout === "Horizontal" || isMobile) {
         style.display = "flex";
         style.flexDirection = "column";
@@ -184,7 +184,7 @@ function BasePlanningTab() {
     const [selectedPalId, setSelectedPalId] = useState(null);
     const { isMobile } = useBreakpoint();
 
-    return <div style={{ height: "90vh", width: "100%", display: "flex", flexDirection: isMobile ? "column" : "row" }}>
+    return <div style={{ height: "95vh", width: "100%", display: "flex", flexDirection: isMobile ? "column" : "row" }}>
         <div style={{ height: isMobile ? "500px" : "100%", width: "100%", maxWidth: "min(95vw, 480px)" }}>
             <SidePanel selectedPalId={selectedPalId} setSelectedPalId={setSelectedPalId} />
         </div>

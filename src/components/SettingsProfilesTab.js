@@ -100,6 +100,10 @@ function SettingsComponent() {
                 valueComponent={<NumberOption value={profileData.defaultCurrentEnhancement} min={0} max={60} step={3} setValue={e => profileHandler.setProfileDefaultCurrentEnhancement(profileData, setProfileData, e)} />} />
             <Setting name={"Default Target Work Speed Enhancement"} tooltip={"Target work speed enhancement level to assign to newly added pals"}
                 valueComponent={<NumberOption value={profileData.defaultTargetEnhancement} min={0} max={60} step={3} setValue={e => profileHandler.setProfileDefaultTargetEnhancement(profileData, setProfileData, e)} />} />
+            <Setting name={"Default Current Combat Stat Enhancements"} tooltip={"Current combat stat enhancements to assign to newly added pals"}
+                valueComponent={<NumberOption value={profileData.defaultCurrentCombatEnhancement} min={0} max={60} step={3} setValue={e => profileHandler.setProfileDefaultCurrentCombatEnhancement(profileData, setProfileData, e)} />} />
+            <Setting name={"Default Target Combat Stat Enhancements"} tooltip={"Target combat stat enhancements level to assign to newly added pals"}
+                valueComponent={<NumberOption value={profileData.defaultTargetCombatEnhancement} min={0} max={60} step={3} setValue={e => profileHandler.setProfileDefaultTargetCombatEnhancement(profileData, setProfileData, e)} />} />
         </div>
         <Tooltip id={`setting`} style={{ ...tooltipStyle, whiteSpace: "pre-wrap" }} />
 

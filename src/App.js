@@ -5,7 +5,7 @@ import WorkSuitabilitiesTab from './components/WorkSuitabilitiesTab/WorkSuitabil
 import SettingsProfilesTab from './components/SettingsProfilesTab';
 import { Tooltip } from 'react-tooltip';
 import { tooltipStyle } from './styles';
-import { ProfileProvider, Layout, useBreakpoint } from '@eldritchtools/shared-components';
+import { ProfileProvider, Layout } from '@eldritchtools/shared-components';
 import migrateProfile from './migrateProfile';
 import PalInfoCard from './components/PalInfoCard';
 import { pals } from '@eldritchtools/palworld-shared-library';
@@ -27,7 +27,6 @@ const paths = [
 ]
 
 function App() {
-    const { isDesktop } = useBreakpoint();
 
     return <ProfileProvider dbName={"palworld-base-planner"} migrateProfile={migrateProfile}>
         <div className="App">
@@ -45,7 +44,7 @@ function App() {
                     includeDiscord={false}
                 >
                     <div className="App-content">
-                        <div style={{ width: isDesktop ? "100%" : "100%" }}>
+                        <div style={{ width: "100%" }}>
                             <Routes>
                                 <Route path="/" element={<BasePlanningTab />} />
                                 <Route path="/base-planning" element={<BasePlanningTab />} />
