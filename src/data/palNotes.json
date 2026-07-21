@@ -191,5 +191,10 @@
         "notes": "While at a base, increases the Medicine Production Work Suitability Level for all other Base Pals by +1.",
         "shortNote": "Boost Medicine Production of base pals",
         "values": ["1", "1", "1", "1", "1"]
+    },
+    "ThunderFluffyBird": {
+        "notes": "While at a base, shortens the time it takes to incubate eggs by (20~40)%.",
+        "shortNote": "Shortens incubation time",
+        "values": ["20%", "22%", "26%", "32%", "40%"]
     }
 }
